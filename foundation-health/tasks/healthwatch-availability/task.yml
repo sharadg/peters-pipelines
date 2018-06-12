@@ -8,9 +8,7 @@ image_resource:
     repository: starkandwayne/concourse
 
 params:
-  HEALTHWATCH_URL:
-  HEALTHWATCH_USERNAME:
-  HEALTHWATCH_PASSWORD:
+  SYS_ENDPOINT:
 
 inputs:
   - name: peters-pipelines

@@ -2,7 +2,7 @@
 
 set -eu
 
-status=$(curl -X GET  healthwatch-api.sys.pcf.cloud.oskoss.com/info)
+status=$(curl -X GET  healthwatch-api.$SYS_ENDPOINT/info)
 
 if [ "$status" = "HAPI is happy" ]; then
  exit 0
