@@ -17,6 +17,4 @@ jobs:
   - task: ping-pong
     file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
     params:
-      HEATHWATCH_URL: {{healthwatch_url}}
-      HEALTHWATCH_USERNAME: {{healthwatch_username}}
-      HEALTHWATCH_PASSWORD: {{healthwatch_password}}
+      SYSENDPOINT: {{sys_endpoint}}
