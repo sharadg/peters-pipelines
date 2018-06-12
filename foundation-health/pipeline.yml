@@ -1,0 +1,16 @@
+resources:
+- name: peters-pipelines
+  type: git
+  source:
+    uri: https://github.com/Oskoss/peters-pipelines.git
+
+jobs:
+- name: healthwatch-avilablity
+  plan:
+  - get: peters-pipelines
+  - task: ping-pong
+    file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
+    params:
+      HEATHWATCH_URL: {{healthwatch_url}}
+      HEALTHWATCH_USERNAME: {{healthwatch_username}}
+      HEALTHWATCH_PASSWORD: {{healthwatch_password}}
