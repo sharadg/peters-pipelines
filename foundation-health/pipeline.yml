@@ -14,7 +14,17 @@ jobs:
   - get: 5m
     trigger: true
   - get: peters-pipelines
-  - task: ping-pong
+  - task: ping
     file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
+- name: healthwatch-login
+  plan:
+  - get: 5m
+    trigger: true
+  - get: peters-pipelines
+  - task: login
+    file: peters-pipelines/foundation-health/tasks/healthwatch-login/task.yml
+    params:
+      SYS_ENDPOINT: {{sys_endpoint}}
+      ADMIN_PASSWORD: {{admin_password}}
