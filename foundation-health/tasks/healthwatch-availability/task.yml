@@ -16,4 +16,4 @@ inputs:
   - name: peters-pipelines
 
 run:
-  path: pcf-pipelines/install-pcf/vsphere/tasks/config-opsdir/task.sh
+  path: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.sh
