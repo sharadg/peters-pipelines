@@ -17,4 +17,4 @@ jobs:
   - task: ping-pong
     file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
     params:
-      SYSENDPOINT: {{sys_endpoint}}
+      SYS_ENDPOINT: {{sys_endpoint}}
