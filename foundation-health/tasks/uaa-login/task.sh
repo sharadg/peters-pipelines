@@ -13,7 +13,7 @@ https://uaa.$SYS_ENDPOINT/oauth/token \
 echo $status
 
 if [ -z "$status" ]; then
- echo "Cannot reach Healthwatch login (UAA)!!"
+ echo "Cannot reach PCF login (UAA)!!"
  exit 1
 fi
 

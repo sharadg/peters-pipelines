@@ -38,6 +38,7 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
 - name: apps-man
   plan:
   - get: 5m
@@ -48,6 +49,7 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
 - name: ops-man
   plan:
   - get: 5m
@@ -58,6 +60,7 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
 - name: log-loss
   plan:
   - get: 5m
@@ -68,3 +71,4 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
