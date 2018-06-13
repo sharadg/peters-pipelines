@@ -15,4 +15,4 @@ inputs:
   - name: peters-pipelines
 
 run:
-  path: peters-pipelines/foundation-health/tasks/healthwatch-login/task.sh
+  path: peters-pipelines/foundation-health/tasks/uaa-login/task.sh

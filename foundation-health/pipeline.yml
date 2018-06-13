@@ -18,13 +18,23 @@ jobs:
     file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
-- name: healthwatch-login
+- name: uaa-login
   plan:
   - get: 5m
     trigger: true
   - get: peters-pipelines
   - task: login
-    file: peters-pipelines/foundation-health/tasks/healthwatch-login/task.yml
+    file: peters-pipelines/foundation-health/tasks/uaa-login/task.yml
+    params:
+      SYS_ENDPOINT: {{sys_endpoint}}
+      ADMIN_PASSWORD: {{admin_password}}
+- name: cli
+  plan:
+  - get: 5m
+    trigger: true
+  - get: peters-pipelines
+  - task: cli
+    file: peters-pipelines/foundation-health/tasks/cli/task.yml
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       ADMIN_PASSWORD: {{admin_password}}
