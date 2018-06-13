@@ -2,7 +2,7 @@
 
 set -eu
 
-cf login -a https://api.$SYS_ENDPOINT  -u admin -p $ADMIN_PASSWORD --skip-ssl-validation
+cf login -a https://api.$SYS_ENDPOINT  -u admin -p $ADMIN_PASSWORD -o system -s system --skip-ssl-validation
 
 output=$(cf nozzle --debug -f ValueMetric | grep -i -m 1 health.check.cliCommand.success)
 cleaned=$(echo $output | sed -n -e 's/^.*health.check.cliCommand.success" value//p')
