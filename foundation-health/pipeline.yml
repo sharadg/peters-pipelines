@@ -48,3 +48,23 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+- name: ops-man
+  plan:
+  - get: 5m
+    trigger: true
+  - get: peters-pipelines
+  - task: cli
+    file: peters-pipelines/foundation-health/tasks/ops-man/task.yml
+    params:
+      SYS_ENDPOINT: {{sys_endpoint}}
+      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
+- name: log-loss
+  plan:
+  - get: 5m
+    trigger: true
+  - get: peters-pipelines
+  - task: cli
+    file: peters-pipelines/foundation-health/tasks/log-loss/task.yml
+    params:
+      SYS_ENDPOINT: {{sys_endpoint}}
+      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
