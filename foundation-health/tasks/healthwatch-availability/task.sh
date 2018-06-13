@@ -3,9 +3,9 @@
 set -xu
 
 output=$(curl -k $HW_DATA_ACCESS_URL/v1/healthwatch | jq ".status")
-echo $status
+echo $output
 
-if [ "$status" = "HAPI is happy" ]; then
+if [ $output -ne 1 ]; then
  exit 0
 fi
 echo "Cannot reach Healthwatch API!!"
