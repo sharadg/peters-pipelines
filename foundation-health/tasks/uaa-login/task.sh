@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -xu
 
 status=$(curl -X POST \
 https://uaa.$SYS_ENDPOINT/oauth/token \

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -xu
 
 cf login -a https://api.$SYS_ENDPOINT  -u admin -p $ADMIN_PASSWORD -o system -s system --skip-ssl-validation
 

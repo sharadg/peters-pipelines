@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -xu
 
 status=$(curl -X GET  healthwatch-api.$SYS_ENDPOINT/info)
 echo $status
