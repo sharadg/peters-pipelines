@@ -2,17 +2,12 @@
 
 set -xu
 
-cf login -a https://api.$SYS_ENDPOINT  -u admin -p $ADMIN_PASSWORD -o system -s system --skip-ssl-validation
-cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
-cf install-plugin -r CF-Community "Firehose Plugin" -f
-output=$(cf nozzle --debug -f ValueMetric | grep -i -m 1 health.check.cliCommand.success)
-cleaned=$(echo $output | sed -n -e 's/^.*health.check.cliCommand.success" value//p')
-healthStatus=${cleaned:1:2}
-echo Status is: $healthStatus
+output=$(mysql -uadmin -p$HEALTHWATCH_MYSQL_PASSWORD -h10.0.5.121 platform_monitoring -B -e "select value from super_value_metric where name='health.check.cliCommand.success' order by timestamp desc limit 1;" | tail -1)
 
-if [ $healthStatus -ne 1 ]; then
+if [ $output -ne 1 ]; then
  echo "Health of CF CLI is degregated!!"
  exit 1
 fi
 
 exit 0
+

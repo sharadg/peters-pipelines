@@ -37,7 +37,7 @@ jobs:
     file: peters-pipelines/foundation-health/tasks/cli/task.yml
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
-      ADMIN_PASSWORD: {{admin_password}}
+      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
 - name: apps-man
   plan:
   - get: 5m
