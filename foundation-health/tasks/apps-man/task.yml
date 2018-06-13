@@ -9,8 +9,7 @@ image_resource:
 
 params:
   SYS_ENDPOINT:
-  ADMIN_PASSWORD:
-
+  HEALTHWATCH_MYSQL_PASSWORD:
 inputs:
   - name: peters-pipelines
 
