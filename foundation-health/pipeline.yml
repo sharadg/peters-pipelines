@@ -38,3 +38,13 @@ jobs:
     params:
       SYS_ENDPOINT: {{sys_endpoint}}
       ADMIN_PASSWORD: {{admin_password}}
+- name: apps-man
+  plan:
+  - get: 5m
+    trigger: true
+  - get: peters-pipelines
+  - task: cli
+    file: peters-pipelines/foundation-health/tasks/apps-man/task.yml
+    params:
+      SYS_ENDPOINT: {{sys_endpoint}}
+      ADMIN_PASSWORD: {{admin_password}}
