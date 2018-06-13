@@ -17,7 +17,7 @@ jobs:
   - task: ping
     file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}
 - name: uaa-login
   plan:
   - get: 5m
@@ -26,8 +26,7 @@ jobs:
   - task: login
     file: peters-pipelines/foundation-health/tasks/uaa-login/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
-      ADMIN_PASSWORD: {{admin_password}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}
 - name: cli
   plan:
   - get: 5m
@@ -36,9 +35,7 @@ jobs:
   - task: cli
     file: peters-pipelines/foundation-health/tasks/cli/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
-      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
-      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}
 - name: apps-man
   plan:
   - get: 5m
@@ -47,9 +44,7 @@ jobs:
   - task: cli
     file: peters-pipelines/foundation-health/tasks/apps-man/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
-      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
-      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}
 - name: ops-man
   plan:
   - get: 5m
@@ -58,9 +53,7 @@ jobs:
   - task: cli
     file: peters-pipelines/foundation-health/tasks/ops-man/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
-      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
-      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}
 - name: log-loss
   plan:
   - get: 5m
@@ -69,6 +62,4 @@ jobs:
   - task: cli
     file: peters-pipelines/foundation-health/tasks/log-loss/task.yml
     params:
-      SYS_ENDPOINT: {{sys_endpoint}}
-      HEALTHWATCH_MYSQL_PASSWORD: {{healthwatch_mysql_password}}
-      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
+      HW_DATA_ACCESS_URL: {{hw_data_access_url}}

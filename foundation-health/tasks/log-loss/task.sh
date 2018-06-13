@@ -2,7 +2,7 @@
 
 set -xu
 
-output=$(mysql -uadmin -p$HEALTHWATCH_MYSQL_PASSWORD -h$HEALTHWATCH_MYSQL_IP platform_monitoring -B -e "select value from super_value_metric where name='Firehose.LossRate.1H' order by timestamp desc limit 1;" | tail -1)
+output=$(curl -k $HW_DATA_ACCESS_URL/v1/logloss | jq ".status")
 threshold=0.01
 
 read status <<< $(echo $threshold $output | awk '{if ($1 < $2) print 0; else print 1}')

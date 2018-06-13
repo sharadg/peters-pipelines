@@ -8,9 +8,7 @@ image_resource:
     repository: mysql
 
 params:
-  SYS_ENDPOINT:
-  HEALTHWATCH_MYSQL_PASSWORD:
-  HEALTHWATCH_MYSQL_IP:
+  HW_DATA_ACCESS_URL:
   
 inputs:
   - name: peters-pipelines

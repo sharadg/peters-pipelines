@@ -2,7 +2,7 @@
 
 set -xu
 
-status=$(curl -X GET  healthwatch-api.$SYS_ENDPOINT/info)
+output=$(curl -k $HW_DATA_ACCESS_URL/v1/healthwatch | jq ".status")
 echo $status
 
 if [ "$status" = "HAPI is happy" ]; then
