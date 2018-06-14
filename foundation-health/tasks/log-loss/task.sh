@@ -1,8 +1,9 @@
 #!/bin/bash
 
-set -xu
+set -exu
 
-status=$(curl -k $HW_DATA_ACCESS_URL/v1/logloss | jq ".status")
+sysdomain=$(echo $CF_API_URL | sed 's~http[s]*://api.~~g')
+status=$(curl -k hw-data-access.$sysdomain/v1/logloss | jq ".status")
 threshold=0.01
 
 read output <<< $(echo $threshold $status | awk '{if ($1 < $2) print 0; else print 1}')
