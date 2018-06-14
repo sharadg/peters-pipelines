@@ -14,4 +14,4 @@ inputs:
   - name: peters-pipelines
 
 run:
-  path: peters-pipelines/foundation-health/tasks/cli/task.sh
+  path: peters-pipelines/foundation-health/tasks/cli-logs/task.sh

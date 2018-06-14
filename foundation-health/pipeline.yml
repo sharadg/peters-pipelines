@@ -43,13 +43,45 @@ jobs:
     file: peters-pipelines/foundation-health/tasks/uaa-login/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
-- name: cli
+- name: cli-push
   plan:
   - get: 5m
     trigger: true
   - get: peters-pipelines
-  - task: cli
-    file: peters-pipelines/foundation-health/tasks/cli/task.yml
+  - task: cli-push
+    file: peters-pipelines/foundation-health/tasks/cli-push/task.yml
+    params:
+      CF_API_URL: {{cf_api_url}}
+- name: cli-start
+  plan:
+  - get: peters-pipelines
+    passed: [cli-push]
+  - task: cli-push
+    file: peters-pipelines/foundation-health/tasks/cli-start/task.yml
+    params:
+      CF_API_URL: {{cf_api_url}}
+- name: cli-logs
+  plan:
+  - get: peters-pipelines
+    passed: [cli-start]
+  - task: cli-push
+    file: peters-pipelines/foundation-health/tasks/cli-logs/task.yml
+    params:
+      CF_API_URL: {{cf_api_url}}
+- name: cli-stop
+  plan:
+  - get: peters-pipelines
+    passed: [cli-push]
+  - task: cli-push
+    file: peters-pipelines/foundation-health/tasks/cli-stop/task.yml
+    params:
+      CF_API_URL: {{cf_api_url}}
+- name: cli-delete
+  plan:
+  - get: peters-pipelines
+    passed: [cli-stop]
+  - task: cli-push
+    file: peters-pipelines/foundation-health/tasks/cli-delete/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
 - name: apps-man

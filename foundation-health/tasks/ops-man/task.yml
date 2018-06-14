@@ -8,7 +8,7 @@ image_resource:
     repository: starkandwayne/concourse
 
 params:
-  HW_DATA_ACCESS_URL:
+  CF_API_URL:
   
 inputs:
   - name: peters-pipelines
