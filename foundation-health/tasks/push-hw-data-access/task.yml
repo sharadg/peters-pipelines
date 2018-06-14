@@ -1,0 +1,21 @@
+---
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: starkandwayne/concourse
+
+params:
+  CF_API_URL:
+  CF_USER:
+  CF_PASSWORD:
+  HEALTHWATCH_MYSQL_IP:
+  HEALTHWATCH_MYSQL_ADMIN_PASSWORD:
+inputs:
+  - name: peters-pipelines
+  - name: hw-data-access
+
+run:
+  path: peters-pipelines/foundation-health/tasks/push-hw-data-access/task.sh

@@ -19,7 +19,7 @@ jobs:
   - get: peters-pipelines
   - get: hw-data-access
   - task: push-app
-    file: peters-pipelines/foundation-health/tasks/healthwatch-availability/task.yml
+    file: peters-pipelines/foundation-health/tasks/push-hw-data-access/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
       CF_PASSWORD: {{cf_password}}
