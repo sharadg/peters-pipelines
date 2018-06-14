@@ -56,7 +56,7 @@ jobs:
   plan:
   - get: peters-pipelines
     passed: [cli-push]
-  - task: cli-push
+  - task: cli-start
     file: peters-pipelines/foundation-health/tasks/cli-start/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
@@ -64,15 +64,15 @@ jobs:
   plan:
   - get: peters-pipelines
     passed: [cli-start]
-  - task: cli-push
+  - task: cli-logs
     file: peters-pipelines/foundation-health/tasks/cli-logs/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
 - name: cli-stop
   plan:
   - get: peters-pipelines
-    passed: [cli-push]
-  - task: cli-push
+    passed: [cli-logs]
+  - task: cli-stop
     file: peters-pipelines/foundation-health/tasks/cli-stop/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
