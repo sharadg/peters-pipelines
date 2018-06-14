@@ -2,14 +2,14 @@
 
 set -xu
 
-output=$(curl -k $HW_DATA_ACCESS_URL/v1/logloss | jq ".status")
+status=$(curl -k $HW_DATA_ACCESS_URL/v1/logloss | jq ".status")
 threshold=0.01
 
-read status <<< $(echo $threshold $output | awk '{if ($1 < $2) print 0; else print 1}')
-echo $status
+read output <<< $(echo $threshold $status | awk '{if ($1 < $2) print 0; else print 1}')
+echo $output
 
 
-if [$status == 1]
+if [ "$output" -eq "1" ]
 then
     exit 0
 fi
