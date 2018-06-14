@@ -10,7 +10,7 @@ sysdomain=$(echo $CF_API_URL | sed 's~http[s]*://api.~~g')
 echo "cf sys domain: $sysdomain"
 echo "" >> manifest.yml
 echo "    routes:" >> manifest.yml
-echo "    - route: $sysdomain" >> manifest.yml
+echo "    - route: hw-data-access.$sysdomain" >> manifest.yml
 echo "Manifest: "
 cat manifest.yml
 cf push -f manifest.yml --no-start
