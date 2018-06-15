@@ -10,7 +10,7 @@ image_resource:
 params:
   CF_API_URL:
   OPSMAN_URL:
-  OPSMAN_USER:
+  OPSMAN_USERNAME:
   OPSMAN_PASSWORD:
 inputs:
   - name: peters-pipelines
