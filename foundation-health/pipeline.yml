@@ -12,7 +12,6 @@ resources:
 - name: 5m
   type: time
   source: {interval: 5m}
-
 jobs:
 - name: push-hw-data-access
   plan:
@@ -22,9 +21,9 @@ jobs:
     file: peters-pipelines/foundation-health/tasks/push-hw-data-access/task.yml
     params:
       CF_API_URL: {{cf_api_url}}
-      CF_PASSWORD: {{cf_password}}
-      HEALTHWATCH_MYSQL_IP: {{healthwatch_mysql_ip}}
-      HEALTHWATCH_MYSQL_ADMIN_PASSWORD: {{healthwatch_mysql_admin_password}}
+      OPSMAN_URL: {{opsman_url}}
+      OPSMAN_USERNAME: {{opsman_username}}
+      OPSMAN_PASSWORD: {{opsman_password}}
 - name: healthwatch-avilablity
   plan:
   - get: 5m
@@ -54,6 +53,8 @@ jobs:
       CF_API_URL: {{cf_api_url}}
 - name: cli-start
   plan:
+  - get: 5m
+    trigger: true
   - get: peters-pipelines
     passed: [cli-push]
   - task: cli-start
@@ -62,6 +63,8 @@ jobs:
       CF_API_URL: {{cf_api_url}}
 - name: cli-logs
   plan:
+  - get: 5m
+    trigger: true
   - get: peters-pipelines
     passed: [cli-start]
   - task: cli-logs
@@ -70,6 +73,8 @@ jobs:
       CF_API_URL: {{cf_api_url}}
 - name: cli-stop
   plan:
+  - get: 5m
+    trigger: true
   - get: peters-pipelines
     passed: [cli-logs]
   - task: cli-stop
@@ -78,6 +83,8 @@ jobs:
       CF_API_URL: {{cf_api_url}}
 - name: cli-delete
   plan:
+  - get: 5m
+    trigger: true
   - get: peters-pipelines
     passed: [cli-stop]
   - task: cli-push

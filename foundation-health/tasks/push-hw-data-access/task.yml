@@ -9,10 +9,9 @@ image_resource:
 
 params:
   CF_API_URL:
-  CF_USER:
-  CF_PASSWORD:
-  HEALTHWATCH_MYSQL_IP:
-  HEALTHWATCH_MYSQL_ADMIN_PASSWORD:
+  OPSMAN_URL:
+  OPSMAN_USER:
+  OPSMAN_PASSWORD:
 inputs:
   - name: peters-pipelines
   - name: hw-data-access
