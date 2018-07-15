@@ -4,4 +4,4 @@ set -xu
 
 cp pks-config/config ~/.kube/config
 
-kubectl create -f pks-prometheus/deployment.yml
+kubectl create -f pks-prometheus/deployment.yml -n $K8S_NAMESPACE

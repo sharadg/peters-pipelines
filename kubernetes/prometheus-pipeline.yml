@@ -28,11 +28,18 @@ jobs:
       K8S_NAMESPACE: {{k8s_namespace}}
   - task: create-cluster-role
     file: peters-pipelines/kubernetes/tasks/create-prometheus-cluster-user/task.yml
+    params:
+      K8S_NAMESPACE: {{k8s_namespace}}
   - task: create-config-map
     file: peters-pipelines/kubernetes/tasks/create-prometheus-config-map/task.yml
+    params:
+      K8S_NAMESPACE: {{k8s_namespace}}
   - task: create-deployment
     file: peters-pipelines/kubernetes/tasks/create-prometheus-deployment/task.yml
+    params:
+      K8S_NAMESPACE: {{k8s_namespace}}
   - task: create-loadbalancer
     file: peters-pipelines/kubernetes/tasks/create-prometheus-loadbalancer/task.yml
-
+    params:
+      K8S_NAMESPACE: {{k8s_namespace}}
   

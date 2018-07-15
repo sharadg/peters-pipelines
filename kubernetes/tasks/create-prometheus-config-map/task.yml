@@ -7,6 +7,9 @@ image_resource:
   source:
     repository: oskoss/pks
 
+params:
+  K8S_NAMESPACE:
+
 inputs:
   - name: peters-pipelines
   - name: pks-prometheus
