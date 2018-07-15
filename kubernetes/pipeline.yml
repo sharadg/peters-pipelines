@@ -5,7 +5,7 @@ resources:
     uri: git@github.com:Oskoss/peters-pipelines.git
     private_key: {{github_private_key}}
 jobs:
-- name: Initialize Helm
+- name: initialize-helm
   plan:
   - get: peters-pipelines
   - task: setup-tiller
