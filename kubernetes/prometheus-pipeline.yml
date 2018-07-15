@@ -26,6 +26,8 @@ jobs:
     file: peters-pipelines/kubernetes/tasks/create-namespace/task.yml
     params:
       K8S_NAMESPACE: {{k8s_namespace}}
+  - task: create-cluster-role
+    file: peters-pipelines/kubernetes/tasks/create-prometheus-cluster-user/task.yml
   - task: create-config-map
     file: peters-pipelines/kubernetes/tasks/create-prometheus-config-map/task.yml
   - task: create-deployment

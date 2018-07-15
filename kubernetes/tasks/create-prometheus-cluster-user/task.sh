@@ -4,4 +4,4 @@ set -xu
 
 cp pks-config/config ~/.kube/config
 
-kubectl create -f pks-prometheus/configMap.yml
+kubectl create -f pks-prometheus/clusterRole.yml
