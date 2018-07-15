@@ -6,10 +6,13 @@ image_resource:
   type: docker-image
   source:
     repository: oskoss/pks
+    
+params:
+  K8_NAMESPACE:
 
 inputs:
   - name: peters-pipelines
   - name: pks-config
 
 run:
-  path: peters-pipelines/kubernetes/tasks/setup-tiller/task.sh
+  path: peters-pipelines/kubernetes/tasks/create-namespace/task.sh

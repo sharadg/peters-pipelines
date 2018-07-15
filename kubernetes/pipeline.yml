@@ -8,10 +8,12 @@ jobs:
 - name: initialize-helm
   plan:
   - get: peters-pipelines
-  - task: setup-tiller
-    file: peters-pipelines/kubernetes/tasks/setup-tiller/task.yml
+  - task: authenticate-cluster
+    file: peters-pipelines/kubernetes/tasks/authenticate-cluster/task.yml
     params:
       PKS_API_URL: {{pks_api_url}}
       PKS_API_USERNAME: {{pks_api_username}}
       PKS_API_PASSWORD: {{pks_api_password}}
       PKS_CLUSTER_NAME: {{pks_cluster_name}}
+  - task: setup-tiller
+    file: peters-pipelines/kubernetes/tasks/setup-tiller/task.yml

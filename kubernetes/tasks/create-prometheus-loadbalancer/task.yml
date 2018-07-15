@@ -9,7 +9,8 @@ image_resource:
 
 inputs:
   - name: peters-pipelines
+  - name: pks-prometheus
   - name: pks-config
 
 run:
-  path: peters-pipelines/kubernetes/tasks/setup-tiller/task.sh
+  path: peters-pipelines/kubernetes/tasks/create-prometheus-loadbalancer/task.sh
