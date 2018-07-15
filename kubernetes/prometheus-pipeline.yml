@@ -25,7 +25,7 @@ jobs:
   - task: create-namespace
     file: peters-pipelines/kubernetes/tasks/create-namespace/task.yml
     params:
-      K8_NAMESPACE: {{k8_namespace}}
+      K8S_NAMESPACE: {{k8s_namespace}}
   - task: create-config-map
     file: peters-pipelines/kubernetes/tasks/create-prometheus-config-map/task.yml
   - task: create-deployment
