@@ -1,0 +1,17 @@
+resources:
+- name: peters-pipelines
+  type: git
+  source:
+    uri: git@github.com:Oskoss/peters-pipelines.git
+    private_key: {{github_private_key}}
+jobs:
+- name: Initialize Helm
+  plan:
+  - get: peters-pipelines
+  - task: setup-tiller
+    file: peters-pipelines/kubernetes/tasks/setup-tiller/task.yml
+    params:
+      PKS_API_URL: {{pks_api_url}}
+      PKS_API_USERNAME: {{pks_api_username}}
+      PKS_API_PASSWORD: {{pks_api_password}}
+      PKS_CLUSTER_NAME: {{pks_cluster_name}}
