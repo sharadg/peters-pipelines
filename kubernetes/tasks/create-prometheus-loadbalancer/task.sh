@@ -16,7 +16,7 @@ do
     then
         echo "Checking again..."
     else
-        echo "Check out your Prometheus Dashboard! http://$loadbalancer_ip:8080"
+        echo "Check out your Prometheus Dashboard! http://$loadBalancer_ip:8080"
         exit 0 
     fi
     sleep 3
