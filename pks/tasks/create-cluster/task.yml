@@ -8,7 +8,7 @@ image_resource:
     repository: oskoss/pks
 
 params:
-  PKS_CLUSTER_NAME:
+  PKS_CLUSTER_PREFIX:
   PKS_CLUSTER_PLAN:
   PKS_CLUSTER_HOSTNAME:
 

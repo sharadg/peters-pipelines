@@ -1,8 +1,14 @@
 #!/bin/bash
 
-set -xu
+set -u
 
-cp pks-config/creds.yml ~/.pks/creds.yml 
+cp pks-config/creds.yml ~/.pks/creds.yml
+
+if [ -z "$PKS_CLUSTER_NAME" ]; then
+
+    PKS_CLUSTER_NAME=$(pks clusters --json | jq -r '.[-1].name')
+    echo "Defaulting to last created cluster $PKS_CLUSTER_NAME"
+fi
 
 k8s_master_ip=$(pks cluster "$PKS_CLUSTER_NAME" --json | jq -r ".kubernetes_master_ips | first")
 

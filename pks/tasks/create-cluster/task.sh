@@ -4,7 +4,28 @@ set -xu
 
 cp pks-config/creds.yml ~/.pks/creds.yml 
 
-pks create-cluster "$PKS_CLUSTER_NAME" \
+set +x
+
+max=-1
+for cluster in $(pks clusters --json | jq -r ".[] | select(.name | startswith(\"$PKS_CLUSTER_PREFIX\")) | .name")
+do
+  num=${cluster:${#PKS_CLUSTER_PREFIX}}
+  [[ $num -gt $max ]] && max=$num
+done
+
+if [ "$max" -ne -1 ]
+then
+  echo "Current Number of Pipeline Created Clusters is: $max"
+fi
+
+cluster_num=$max+1
+cluster_name=""$PKS_CLUSTER_PREFIX"_"$cluster_num""
+
+echo "Creating New PKS Cluster $cluster_name"
+
+set -x
+
+pks create-cluster "$cluster_name" \
 --external-hostname  "$PKS_CLUSTER_HOSTNAME" \
 --plan "$PKS_CLUSTER_PLAN"
  
@@ -14,19 +35,18 @@ set +x
 
 while [ 1 ]
 do
-    status=`pks cluster "$PKS_CLUSTER_NAME" --json | jq -r '.last_action_state'`
+    status=`pks cluster "$cluster_name" --json | jq -r '.last_action_state'`
 
     echo "Status of create-cluster is $status"
     if [ "$status" = "succeeded" ]
     then
-        echo "Success"
+        echo "Created $cluster_name successfully"
         exit 0
     fi
     if [ "$status" = "failed" ]
     then
-        echo "Failed"
+        echo "Failed..."
         exit 1
     fi
     sleep 3
 done
-

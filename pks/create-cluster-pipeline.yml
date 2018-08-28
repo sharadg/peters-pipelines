@@ -17,11 +17,9 @@ jobs:
   - task: create-cluster
     file: peters-pipelines/pks/tasks/create-cluster/task.yml
     params:
-       PKS_CLUSTER_NAME: {{pks_cluster_name}}
+       PKS_CLUSTER_PREFIX: {{pks_cluster_prefix}}
        PKS_CLUSTER_PLAN: {{pks_cluster_plan}}
        PKS_CLUSTER_HOSTNAME: {{pks_cluster_hostname}}
   - task: get-cluster
     file: peters-pipelines/pks/tasks/get-cluster/task.yml
-    params:
-       PKS_CLUSTER_NAME: {{pks_cluster_name}}
   
