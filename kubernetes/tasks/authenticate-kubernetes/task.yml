@@ -1,0 +1,23 @@
+---
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: oskoss/pks
+
+params:
+  PKS_API_URL:
+  PKS_API_USERNAME:
+  PKS_API_PASSWORD:
+  PKS_CLUSTER_NAME:
+
+inputs:
+  - name: peters-pipelines
+
+outputs:
+  - name: kube-config
+  
+run:
+  path: peters-pipelines/kubernetes/tasks/authenticate-kubernetes/task.sh

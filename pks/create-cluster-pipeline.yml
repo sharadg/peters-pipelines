@@ -1,0 +1,27 @@
+resources:
+- name: peters-pipelines
+  type: git
+  source:
+    uri: git@github.com:Oskoss/peters-pipelines.git
+    private_key: {{github_private_key}}
+jobs:
+- name: create-cluster
+  plan:
+  - get: peters-pipelines
+  - task: authenticate-pks
+    file: peters-pipelines/pks/tasks/authenticate-pks/task.yml
+    params:
+      PKS_API_URL: {{pks_api_url}}
+      PKS_API_USERNAME: {{pks_api_username}}
+      PKS_API_PASSWORD: {{pks_api_password}}
+  - task: create-cluster
+    file: peters-pipelines/pks/tasks/create-cluster/task.yml
+    params:
+       PKS_CLUSTERNAME: {{pks_clustername}}
+       PKS_CLUSTERPLAN: {{pks_clusterplan}}
+       PKS_CLUSTERHOSTNAME: {{pks_clusterhostname}}
+  - task: get-cluster
+    file: peters-pipelines/pks/tasks/get-cluster/task.yml
+    params:
+       PKS_CLUSTERNAME: {{pks_clustername}}
+  

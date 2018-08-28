@@ -9,7 +9,7 @@ image_resource:
 
 inputs:
   - name: peters-pipelines
-  - name: pks-config
+  - name: kube-config
 
 run:
   path: peters-pipelines/kubernetes/tasks/setup-tiller/task.sh

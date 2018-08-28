@@ -12,7 +12,7 @@ params:
 
 inputs:
   - name: peters-pipelines
-  - name: pks-config
+  - name: kube-config
 
 run:
   path: peters-pipelines/kubernetes/tasks/create-namespace/task.sh

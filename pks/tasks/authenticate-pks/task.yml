@@ -11,7 +11,6 @@ params:
   PKS_API_URL:
   PKS_API_USERNAME:
   PKS_API_PASSWORD:
-  PKS_CLUSTER_NAME:
 
 inputs:
   - name: peters-pipelines
@@ -20,4 +19,4 @@ outputs:
   - name: pks-config
   
 run:
-  path: peters-pipelines/kubernetes/tasks/authenticate-cluster/task.sh
+  path: peters-pipelines/pks/tasks/authenticate-pks/task.sh

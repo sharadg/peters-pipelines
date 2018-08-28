@@ -8,12 +8,13 @@ image_resource:
     repository: oskoss/pks
 
 params:
-  K8S_NAMESPACE:
+  PKS_CLUSTERNAME:
+  PKS_CLUSTERPLAN:
+  PKS_CLUSTERHOSTNAME:
 
 inputs:
   - name: peters-pipelines
-  - name: pks-prometheus
-  - name: kube-config
+  - name: pks-config
 
 run:
-  path: peters-pipelines/kubernetes/tasks/create-prometheus-deployment/task.sh
+  path: peters-pipelines/pks/tasks/create-cluster/task.sh
