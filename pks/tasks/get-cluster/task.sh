@@ -10,6 +10,6 @@ pks get-credentials "$PKS_CLUSTER_NAME"
 
 sed -i "s/server: .*$/server: https:\/\/"$k8s_master_ip":8443/" ~/.kube/config
 
-echo Kube config for $PKS_CLUSTER_NAME
+echo "Use the following as your .kube/config for $PKS_CLUSTER_NAME!! Have fun K8ing :)"
 
 cat ~/.kube/config
