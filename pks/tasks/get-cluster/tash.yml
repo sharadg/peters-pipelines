@@ -8,7 +8,7 @@ image_resource:
     repository: oskoss/pks
 
 params:
-  PKS_CLUSTERNAME:
+  PKS_CLUSTER_NAME:
 
 inputs:
   - name: peters-pipelines
