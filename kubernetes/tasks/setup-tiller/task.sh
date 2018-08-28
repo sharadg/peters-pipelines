@@ -2,7 +2,7 @@
 
 set -xu
 
-cp pks-config/config ~/.kube/config
+cp kube-config/config ~/.kube/config
 
 cat << EOF > rbac-config.yaml
 apiVersion: v1
