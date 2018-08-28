@@ -10,6 +10,8 @@ pks create-cluster "$PKS_CLUSTER_NAME" \
  
 # wait until cluster is finished creating
 
+set +x
+
 while [ 1 ]
 do
     status=`pks cluster "$PKS_CLUSTER_NAME" --json | jq -r '.last_action_state'`
