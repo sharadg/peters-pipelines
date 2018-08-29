@@ -4,6 +4,8 @@ set -xu
 
 cp pks-config/creds.yml ~/.pks/creds.yml 
 
+set +x
+
 max=-1
 for cluster in $(pks clusters --json | jq -r ".[] | select(.name | startswith(\"$PKS_CLUSTER_PREFIX\")) | .name")
 do
