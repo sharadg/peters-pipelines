@@ -4,8 +4,6 @@ set -xu
 
 cp pks-config/creds.yml ~/.pks/creds.yml 
 
-set +x
-
 max=-1
 for cluster in $(pks clusters --json | jq -r ".[] | select(.name | startswith(\"$PKS_CLUSTER_PREFIX\")) | .name")
 do
@@ -18,7 +16,7 @@ then
   echo "Current Number of Pipeline Created Clusters is: $max"
 fi
 
-cluster_num=$max+1
+cluster_num=$((max + 1))
 cluster_name=""$PKS_CLUSTER_PREFIX"_"$cluster_num""
 
 echo "Creating New PKS Cluster $cluster_name"
@@ -48,5 +46,5 @@ do
         echo "Failed..."
         exit 1
     fi
-    sleep 3
+    sleep 30
 done
