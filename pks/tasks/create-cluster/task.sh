@@ -7,15 +7,17 @@ cp pks-config/creds.yml ~/.pks/creds.yml
 set +x
 
 max=-1
+cluster_prefix_length=$((${#PKS_CLUSTER_PREFIX} + 1))
+
 for cluster in $(pks clusters --json | jq -r ".[] | select(.name | startswith(\"$PKS_CLUSTER_PREFIX\")) | .name")
 do
-  num=${cluster:${#PKS_CLUSTER_PREFIX}}
+  num=${cluster:${cluster_prefix_length}}
   [[ $num -gt $max ]] && max=$num
 done
 
 if [ "$max" -ne -1 ]
 then
-  echo "Current Number of Pipeline Created Clusters is: $max"
+  echo "Current Number of Pipeline Created Clusters is: $((max + 1))"
 fi
 
 cluster_num=$((max + 1))
