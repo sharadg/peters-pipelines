@@ -17,14 +17,15 @@ then
 fi
 
 cluster_num=$((max + 1))
-cluster_name=""$PKS_CLUSTER_PREFIX"_"$cluster_num""
+cluster_name="${PKS_CLUSTER_PREFIX}_${cluster_num}"
+host_name="${cluster_name}.${PKS_CLUSTER_HOSTNAME}"
 
-echo "Creating New PKS Cluster $cluster_name"
+echo "Creating New PKS Cluster $cluster_name with hostname $host_name"
 
 set -x
 
 pks create-cluster "$cluster_name" \
---external-hostname  "$PKS_CLUSTER_HOSTNAME" \
+--external-hostname  "$host_name" \
 --plan "$PKS_CLUSTER_PLAN"
  
 # wait until cluster is finished creating
