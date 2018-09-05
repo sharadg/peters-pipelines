@@ -21,7 +21,7 @@ then
 fi
 
 cluster_num=$((max + 1))
-cluster_name="${PKS_CLUSTER_PREFIX}_${cluster_num}"
+cluster_name="${PKS_CLUSTER_PREFIX}-${cluster_num}"
 host_name="${cluster_name}-${PKS_CLUSTER_HOSTNAME}"
 
 echo "Creating New PKS Cluster $cluster_name with hostname $host_name"
