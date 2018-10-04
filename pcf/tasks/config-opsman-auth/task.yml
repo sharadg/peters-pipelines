@@ -18,4 +18,4 @@ inputs:
   - name: peters-pipelines
 
 run:
-  path: peters-pipelines/pcf/tasks/config-opsman/task.sh
+  path: peters-pipelines/pcf/tasks/config-opsman-auth/task.sh

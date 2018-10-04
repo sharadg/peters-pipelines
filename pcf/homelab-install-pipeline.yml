@@ -17,6 +17,27 @@ resources:
     product_slug: ops-manager
     product_version: {{opsman_major_minor_version}}
     sort_by: semver
+- name: pivotal-mysql
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: pivotal-mysql
+    product_version: {{mysql_major_minor_version}}
+    sort_by: semver
+- name: p-rabbitmq
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: p-rabbitmq
+    product_version: {{rabbitmq_major_minor_version}}
+    sort_by: semver
+- name: p-spring-cloud-services
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: p-spring-cloud-services
+    product_version: {{scs_major_minor_version}}
+    sort_by: semver
 - name: srt
   type: pivnet
   source:
@@ -145,6 +166,81 @@ jobs:
       trigger: true
 
   - task: upload-srt-tile
+    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
+
+- name: upload-RMQ
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: p-rabbitmq
+      params: {globs: ["p-rabbitmq*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+
+  - task: upload-rmq-tile
+    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
+
+- name: upload-MySQL
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: pivotal-mysql
+      params: {globs: ["pivotal-mysql*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+
+  - task: upload-mysql-tile
+    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
+
+- name: upload-SCS
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: p-spring-cloud-services
+      params: {globs: ["p-spring-cloud-services*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+
+  - task: upload-mysql-tile
     file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
