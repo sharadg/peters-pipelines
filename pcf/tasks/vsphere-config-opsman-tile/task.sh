@@ -119,12 +119,12 @@ security_configuration=$(
 
 network_assignment=$(
 jq -n \
-  --arg infra_availability_zones "$INFRA_NW_AZS" \
-  --arg network "$INFRA_NETWORK_NAME" \
+  --arg availability_zones "$NW_AZS" \
+  --arg network "$NETWORK_NAME" \
   '
   {
   "singleton_availability_zone": {
-    "name": ($infra_availability_zones | split(",") | .[0])
+    "name": ($availability_zones | split(",") | .[0])
   },
   "network": {
     "name": $network
