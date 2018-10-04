@@ -166,7 +166,7 @@ jobs:
       trigger: true
 
   - task: upload-srt-tile
-    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
       OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
@@ -191,7 +191,7 @@ jobs:
       trigger: true
 
   - task: upload-rmq-tile
-    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
       OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
@@ -216,7 +216,7 @@ jobs:
       trigger: true
 
   - task: upload-mysql-tile
-    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
       OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
@@ -241,7 +241,7 @@ jobs:
       trigger: true
 
   - task: upload-mysql-tile
-    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
       OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
@@ -265,6 +265,72 @@ jobs:
       resource: srt
       params: {globs: ["srt*.pivotal"]}
       passed: [upload-SRT-PAS]
+
+  - task: stage-srt-tile
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
+- name: stage-RMQ
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-RMQ]
+      trigger: true
+    - get: pivnet-product
+      resource: p-rabbitmq
+      params: {globs: ["p-rabbitmq*.pivotal"]}
+      passed: [upload-RMQ]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
+- name: stage-MySQL
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-MySQL]
+      trigger: true
+    - get: pivnet-product
+      resource: pivotal-mysql
+      params: {globs: ["pivotal-mysql*.pivotal"]}
+      passed: [upload-MySQL]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
+- name: stage-SCS
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-SCS]
+      trigger: true
+    - get: pivnet-product
+      resource: p-spring-cloud-services
+      params: {globs: ["p-spring-cloud-services*.pivotal"]}
+      passed: [upload-SCS]
 
   - task: stage
     file: peters-pipelines/pcf/tasks/stage-product/task.yml
