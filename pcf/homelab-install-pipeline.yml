@@ -340,3 +340,114 @@ jobs:
       OPSMAN_PASSWORD: {{opsman_admin_password}}
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
+
+- name: deploy-ert
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [stage-SRT-PAS]
+      trigger: true
+
+  - task: configure
+    file: peters-pipelines/pas/tasks/config-pas-tile/task.yml
+    params:
+      IAAS: vsphere
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      ERT_SINGLETON_JOB_AZ: {{ert_singleton_job_az}}
+      DEPLOYMENT_NW_AZS: {{nw_azs}}
+      NETWORK_NAME: {{network_name}}
+      ENABLE_SECURITY_EVENT_LOGGING: {{enable_security_event_logging}}
+      SYSLOG_HOST: {{syslog_host}}
+      SYSLOG_PORT: {{syslog_port}}
+      SYSLOG_PROTOCOL: {{syslog_protocol}}
+      SYSLOG_DRAIN_BUFFER_SIZE: {{syslog_drain_buffer_size}}
+      COMPANY_NAME: {{company_name}}
+      AUTHENTICATION_MODE: {{authentication_mode}}
+      LOGGREGATOR_ENDPOINT_PORT: {{loggregator_endpoint_port}}
+      POE_SSL_NAME1: {{poe_ssl_name1}}
+      POE_SSL_CERT1: {{poe_ssl_cert1}}
+      POE_SSL_KEY1: {{poe_ssl_key1}}
+      POE_SSL_NAME2: {{poe_ssl_name2}}
+      POE_SSL_CERT2: {{poe_ssl_cert2}}
+      POE_SSL_KEY2: {{poe_ssl_key2}}
+      POE_SSL_NAME3: {{poe_ssl_name3}}
+      POE_SSL_CERT3: {{poe_ssl_cert3}}
+      POE_SSL_KEY3: {{poe_ssl_key3}}
+      SAML_SSL_CERT: {{saml_ssl_cert}}
+      SAML_SSL_PRIVATE_KEY: {{saml_ssl_private_key}}
+      HAPROXY_FORWARD_TLS: {{haproxy_forward_tls}}
+      HAPROXY_BACKEND_CA: {{haproxy_backend_ca}}
+      ROUTER_TLS_CIPHERS: {{router_tls_ciphers}}
+      HAPROXY_TLS_CIPHERS: {{haproxy_tls_ciphers}}
+      FRONTEND_IDLE_TIMEOUT: {{frontend_idle_timeout}}
+      DISABLE_HTTP_PROXY: {{disable_http_proxy}}
+      TCP_ROUTING: {{tcp_routing}}
+      TCP_ROUTING_PORTS: {{tcp_routing_ports}}
+      ROUTE_SERVICES: {{route_services}}
+      IGNORE_SSL_CERT: {{ignore_ssl_cert_verification}}
+      SMTP_FROM: {{smtp_from}}
+      SMTP_ADDRESS: {{smtp_address}}
+      SMTP_PORT: {{smtp_port}}
+      SMTP_USER: {{smtp_user}}
+      SMTP_PWD: {{smtp_pwd}}
+      SMTP_ENABLE_STARTTLS_AUTO: {{smtp_enable_starttls_auto}}
+      SMTP_AUTH_MECHANISM: {{smtp_auth_mechanism}}
+      LDAP_URL: {{ldap_url}}
+      LDAP_USER: {{ldap_user}}
+      LDAP_PWD: {{ldap_pwd}}
+      SEARCH_BASE: {{search_base}}
+      SEARCH_FILTER: {{search_filter}}
+      GROUP_SEARCH_BASE: {{group_search_base}}
+      GROUP_SEARCH_FILTER: {{group_search_filter}}
+      MAIL_ATTR_NAME: {{mail_attribute_name}}
+      FIRST_NAME_ATTR: {{first_name_attribute}}
+      LAST_NAME_ATTR: {{last_name_attribute}}
+      SECURITY_ACKNOWLEDGEMENT: {{security_acknowledgement}}
+      SYSTEM_DOMAIN: {{system_domain}}
+      APPS_DOMAIN: {{apps_domain}}
+      DEFAULT_QUOTA_MEMORY_LIMIT_IN_MB: {{default_quota_memory_limit_mb}}
+      DEFAULT_QUOTA_MAX_SERVICES_COUNT: {{default_quota_max_number_services}}
+      HA_PROXY_IPS: {{ha_proxy_ips}}
+      SKIP_CERT_VERIFY: {{skip_cert_verify}}
+      DISABLE_INSECURE_COOKIES: {{disable_insecure_cookies}}
+      ROUTER_STATIC_IPS: {{router_static_ips}}
+      ROUTER_REQUEST_TIMEOUT_IN_SEC: {{router_request_timeout_in_seconds}}
+      MYSQL_MONITOR_EMAIL: {{mysql_monitor_email}}
+      ALLOW_APP_SSH_ACCESS: {{allow_app_ssh_access}}
+      TCP_ROUTER_STATIC_IPS: {{tcp_router_static_ips}}
+      SSH_STATIC_IPS: {{ssh_static_ips}}
+      MYSQL_STATIC_IPS: {{mysql_static_ips}}
+      INTERNET_CONNECTED: {{internet_connected}}
+      CONTAINER_NETWORKING_NW_CIDR: {{container_networking_nw_cidr}}
+      TCP_ROUTER_NSX_SECURITY_GROUP: {{tcp_router_nsx_security_group}}
+      TCP_ROUTER_NSX_LB_EDGE_NAME: {{tcp_router_nsx_lb_edge_name}}
+      TCP_ROUTER_NSX_LB_POOL_NAME: {{tcp_router_nsx_lb_pool_name}}
+      TCP_ROUTER_NSX_LB_SECURITY_GROUP: {{tcp_router_nsx_lb_security_group}}
+      TCP_ROUTER_NSX_LB_PORT: {{tcp_router_nsx_lb_port}}
+      ROUTER_NSX_SECURITY_GROUP: {{router_nsx_security_group}}
+      ROUTER_NSX_LB_EDGE_NAME: {{router_nsx_lb_edge_name}}
+      ROUTER_NSX_LB_POOL_NAME: {{router_nsx_lb_pool_name}}
+      ROUTER_NSX_LB_SECURITY_GROUP: {{router_nsx_lb_security_group}}
+      ROUTER_NSX_LB_PORT: {{router_nsx_lb_port}}
+      DIEGO_BRAIN_NSX_SECURITY_GROUP: {{diego_brain_nsx_security_group}}
+      DIEGO_BRAIN_NSX_LB_EDGE_NAME: {{diego_brain_nsx_lb_edge_name}}
+      DIEGO_BRAIN_NSX_LB_POOL_NAME: {{diego_brain_nsx_lb_pool_name}}
+      DIEGO_BRAIN_NSX_LB_SECURITY_GROUP: {{diego_brain_nsx_lb_security_group}}
+      DIEGO_BRAIN_NSX_LB_PORT: {{diego_brain_nsx_lb_port}}
+      MYSQL_NSX_SECURITY_GROUP: {{mysql_nsx_security_group}}
+      MYSQL_NSX_LB_EDGE_NAME: {{mysql_nsx_lb_edge_name}}
+      MYSQL_NSX_LB_POOL_NAME: {{mysql_nsx_lb_pool_name}}
+      MYSQL_NSX_LB_SECURITY_GROUP: {{mysql_nsx_lb_security_group}}
+      MYSQL_NSX_LB_PORT: {{mysql_nsx_lb_port}}
+      ROUTING_TLS_TERMINATION: {{routing_tls_termination}}
+      ROUTING_CUSTOM_CA_CERTIFICATES: {{routing_custom_ca_certificates}}
+      CREDUB_ENCRYPTION_KEY_NAME1: {{credhub_encryption_key_name1}}
+      CREDUB_ENCRYPTION_KEY_SECRET1: {{credhub_encryption_key_secret1}}
+      HA_PROXY_LB_NAME: ""
+      HAPROXY_FLOATING_IPS: ""
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
