@@ -9,6 +9,7 @@ image_resource:
 
 params:
   IAAS:
+  COMPUTE_INSTANCES:
   OPSMAN_DOMAIN_OR_IP_ADDRESS:
   OPS_MGR_USR:
   OPS_MGR_PWD:

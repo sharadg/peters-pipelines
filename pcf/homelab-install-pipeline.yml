@@ -447,6 +447,7 @@ jobs:
       ROUTING_CUSTOM_CA_CERTIFICATES: {{routing_custom_ca_certificates}}
       CREDUB_ENCRYPTION_KEY_NAME1: {{credhub_encryption_key_name1}}
       CREDUB_ENCRYPTION_KEY_SECRET1: {{credhub_encryption_key_secret1}}
+      COMPUTE_INSTANCES: {{compute_instances}}
       HA_PROXY_LB_NAME: ""
       HAPROXY_FLOATING_IPS: ""
       OPSMAN_CLIENT_ID: ""

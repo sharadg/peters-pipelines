@@ -473,6 +473,19 @@ cf_network=$(
     '
 )
 
+JOB_RESOURCE_CONFIG="{
+  \"compute\": { \"instances\": $COMPUTE_INSTANCES }
+}"
+
+cf_resources=$(
+  jq -n \
+    --arg iaas "$IAAS" \
+        --argjson job_resource_config "${JOB_RESOURCE_CONFIG}" \
+    '
+    $job_resource_config    
+    '
+)
+
 om-linux \
   --target https://$OPSMAN_DOMAIN_OR_IP_ADDRESS \
   --username "$OPS_MGR_USR" \
@@ -481,4 +494,5 @@ om-linux \
   configure-product \
   --product-name cf \
   --product-properties "$cf_properties" \
-  --product-network "$cf_network" 
+  --product-network "$cf_network" \
+  --product-resources "$cf_resources"
