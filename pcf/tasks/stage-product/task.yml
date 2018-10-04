@@ -1,0 +1,22 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pcfnorm/rootfs
+
+
+inputs:
+  - name: peters-pipelines
+  - name: pivnet-product
+
+params:
+  OPSMAN_CLIENT_ID:
+  OPSMAN_CLIENT_SECRET:
+  OPSMAN_USERNAME:
+  OPSMAN_PASSWORD:
+  OPSMAN_DOMAIN_OR_IP_ADDRESS:
+
+run:
+  path: peters-pipelines/pcf/tasks/stage-product/task.sh

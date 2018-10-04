@@ -17,6 +17,13 @@ resources:
     product_slug: ops-manager
     product_version: {{opsman_major_minor_version}}
     sort_by: semver
+- name: srt
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: elastic-runtime
+    product_version: {{ert_major_minor_version}}
+    sort_by: semver
 jobs:
 - name: deploy-opsman
   plan:
@@ -124,3 +131,50 @@ jobs:
       OPSMAN_CLIENT_SECRET: ""
       OPSMAN_USERNAME: {{opsman_admin_username}}
       OPSMAN_PASSWORD: {{opsman_admin_password}}
+
+- name: upload-SRT-PAS
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: srt
+      params: {globs: ["srt*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+
+  - task: upload-srt-tile
+    file: pcf-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
+
+- name: stage-SRT-PAS
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-SRT-PAS]
+      trigger: true
+    - get: pivnet-product
+      resource: srt
+      params: {globs: ["srt*.pivotal"]}
+      passed: [upload-SRT-PAS]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
