@@ -110,11 +110,7 @@ function formatCredhubEncryptionKeysJson() {
             \"key\":{
                 \"secret\": \"$credhub_encryption_key_secret1\"
              }"
-    if [[ "${credhub_primary_encryption_name}" == $credhub_encryption_key_name1 ]]; then
-        credhub_encryption_keys_json="$credhub_encryption_keys_json, \"primary\": true}"
-    else
-        credhub_encryption_keys_json="$credhub_encryption_keys_json}"
-    fi
+    credhub_encryption_keys_json="$credhub_encryption_keys_json, \"primary\": true}"
     echo "$credhub_encryption_keys_json"
 }
 
