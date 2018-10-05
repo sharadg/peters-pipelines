@@ -341,7 +341,7 @@ jobs:
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
 
-- name: deploy-ert
+- name: Configure-SRT-PAS-Tile
   plan:
   - aggregate:
     - get: peters-pipelines
@@ -452,3 +452,37 @@ jobs:
       HAPROXY_FLOATING_IPS: ""
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
+- name: Configure-MySQL-Tile
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [stage-MySQL]
+      trigger: true
+
+  - task: configure
+    file: peters-pipelines/pcf/tasks/config-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      PRODUCT_NAME: "pivotal-mysql"
+      PRODUCT_CONFIG_YAML: "peters-pipelines/pcf/sample-tile-configs/mysqlv2.yml"
+- name: Configure-RMQ-Tile
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [stage-RMQ]
+      trigger: true
+
+  - task: configure
+    file: peters-pipelines/pcf/tasks/config-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      PRODUCT_NAME: "p-rabbitmq"
+      PRODUCT_CONFIG_YAML: "peters-pipelines/pcf/sample-tile-configs/rabbitmq.yml"

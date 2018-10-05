@@ -1,0 +1,70 @@
+product-properties:
+  .properties.allow_lower_case_table_names_via_config_param:
+    value: false
+  .properties.audit_logging_enabled:
+    value: false
+  .properties.backups_selector:
+    value: SCP Backups
+  .properties.backups_selector.scp.port:
+    value: 123
+  .properties.backups_selector.scp.server:
+    value: fake
+  .properties.backups_selector.scp.user:
+    value: fake
+  .properties.backups_selector.scp.key:
+    value: fake
+  .properties.backups_selector.scp.destination:
+    value: fake
+  .properties.canary_instances:
+    value: 0
+  .properties.enable_lower_case_table_names:
+    value: false
+  .properties.enable_read_only_admin:
+    value: true
+  .properties.enable_secure_binding_credentials:
+    value: true
+  .properties.enable_tls_selector:
+    value: disabled
+  .properties.global_service_instance_limit:
+    value: 50
+  .properties.local_infile:
+    value: false
+  .properties.mysql_metrics_frequency:
+    value: 30
+  .properties.plan1_selector:
+    value: Active
+  .properties.plan1_selector.active.az_multi_select:
+    value: [az1]
+  .properties.plan2_selector:
+    value: Inactive
+  .properties.plan3_selector:
+    value: Inactive
+  .properties.plan4_selector:
+    value: Inactive
+  .properties.plan5_selector:
+    value: Inactive
+  .properties.request_timeout:
+    value: 120
+  .properties.simultaneous_upgrades:
+    value: 1
+  .properties.syslog_migration_selector:
+    value: disabled
+  .properties.userstat:
+    value: false
+  .properties.vm_extensions:
+    value:
+    - public_ip
+network-properties:
+  network:
+    name: pcf-network
+  other_availability_zones:
+  - name: az1
+  service_network:
+    name: pcf-network
+  singleton_availability_zone:
+    name: az1
+resource-config:
+  dedicated-mysql-broker:
+    instances: automatic
+    instance_type:
+      id: automatic
