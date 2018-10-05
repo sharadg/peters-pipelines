@@ -7,7 +7,6 @@ image_resource:
 
 inputs:
   - name: peters-pipelines
-  - name: configuration
 
 run:
   path: peters-pipelines/pcf/tasks/config-product/task.sh
