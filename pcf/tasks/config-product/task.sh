@@ -11,7 +11,7 @@ function main() {
     --skip-ssl-validation \
     configure-product \
     --product-name "${PRODUCT_NAME}" \
-    --config "${PRODUCT_CONFIG_YAML}"
+    -c "${PRODUCT_CONFIG_YAML}"
 }
 
 main
