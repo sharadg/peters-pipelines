@@ -11,5 +11,5 @@ mv winfs-injector-linux /usr/local/bin/winfs-injector
 
 tile=$(ls raw-pasw-tile/pas-windows*.pivotal)
 
-winfs-injector --input-tile raw-pasw-tile/${tile} \
+winfs-injector --input-tile ${tile} \
 --output-tile pivnet-product/injected-${tile}
