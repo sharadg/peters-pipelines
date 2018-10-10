@@ -45,6 +45,13 @@ resources:
     product_slug: elastic-runtime
     product_version: {{ert_major_minor_version}}
     sort_by: semver
+- name: pas-windows
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: pas-windows
+    product_version: {{pas_windows_major_minor_version}}
+    sort_by: semver
 jobs:
 - name: deploy-opsman
   plan:
@@ -177,7 +184,31 @@ jobs:
       PIVNET_API_TOKEN: {{pivnet_token}}
       NO_PROXY: {{company_proxy_domain}}
       OM_IP: {{om_ip}}
-
+- name: upload-PAS-Windows
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: pas-windows
+      params: {globs: ["*"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+  - task: inject-PASW-tile
+    file: peters-pipelines/pas/tasks/inject-pasw-tile/task.yml
+  - task: upload-PASW-tile
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
 - name: upload-RMQ
   plan:
   - aggregate:
