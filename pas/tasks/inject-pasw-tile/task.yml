@@ -9,7 +9,7 @@ image_resource:
 
 inputs:
   - name: peters-pipelines
-  - name: pivnet-product
+  - name: raw-pasw-tile
 
 outputs:
   - name: pivnet-product

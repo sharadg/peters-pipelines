@@ -1,12 +1,15 @@
 #!/bin/bash
 
-unzip pivnet-product/*.zip
+cp raw-pasw-tile/metadata.json pivnet-product/metadata.json
+cp raw-pasw-tile/metadata.yaml pivnet-product/metadata.yaml
+
+unzip raw-pasw-tile/*.zip
 
 chmod +x winfs-injector-linux
 mv winfs-injector-linux /usr/local/bin/winfs-injector
 
 
-tile=$(ls pivnet-product/pas-windows*.pivotal)
+tile=$(ls raw-pasw-tile/pas-windows*.pivotal)
 
-winfs-injector --input-tile pivnet-product/${tile} \
+winfs-injector --input-tile raw-pasw-tile/${tile} \
 --output-tile pivnet-product/injected-${tile}

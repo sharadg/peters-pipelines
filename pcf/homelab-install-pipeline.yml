@@ -45,12 +45,19 @@ resources:
     product_slug: elastic-runtime
     product_version: {{ert_major_minor_version}}
     sort_by: semver
-- name: pas-windows
+- name: raw-pasw-tile
   type: pivnet
   source:
     api_token: {{pivnet_token}}
     product_slug: pas-windows
     product_version: {{pas_windows_major_minor_version}}
+    sort_by: semver
+- name: p-healthwatch
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: p-healthwatch
+    product_version: {{healthwatch_major_minor_version}}
     sort_by: semver
 jobs:
 - name: deploy-opsman
@@ -188,8 +195,7 @@ jobs:
   plan:
   - aggregate:
     - get: peters-pipelines
-    - get: pivnet-product
-      resource: pas-windows
+    - get: raw-pasw-tile
       params: {globs: ["*"]}
     - get: pcf-ops-manager
       params: {globs: []}
@@ -271,7 +277,31 @@ jobs:
       passed: [configure-ops-director]
       trigger: true
 
-  - task: upload-mysql-tile
+  - task: upload-scs-tile
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
+- name: upload-Healthwatch
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: p-healthwatch
+      params: {globs: ["p-healthwatch*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
+
+  - task: upload-healthwatch-tile
     file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
     params:
       IAAS: "vsphere"
@@ -362,6 +392,28 @@ jobs:
       resource: p-spring-cloud-services
       params: {globs: ["p-spring-cloud-services*.pivotal"]}
       passed: [upload-SCS]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
+- name: stage-Healthwatch
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-Healthwatch]
+      trigger: true
+    - get: pivnet-product
+      resource: p-healthwatch
+      params: {globs: ["p-healthwatch*.pivotal"]}
+      passed: [upload-Healthwatch]
 
   - task: stage
     file: peters-pipelines/pcf/tasks/stage-product/task.yml
