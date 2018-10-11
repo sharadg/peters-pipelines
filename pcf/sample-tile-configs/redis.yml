@@ -17,6 +17,8 @@ product-properties:
     value: 30
   .properties.small_plan_selector:
     value: Plan Active
+  .properties.small_plan_selector.active.az_single_select:
+    value: az1
   .properties.syslog_selector:
     value: "No"
   .redis-on-demand-broker.maximum_parallel_upgrades:
