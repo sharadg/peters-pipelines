@@ -344,7 +344,8 @@ jobs:
       params: {globs: []}
       passed: [upload-PAS-Windows]
       trigger: true
-    - get: raw-pasw-tile
+    - get: pivnet-product
+      resource: raw-pasw-tile
       params: {globs: ["pas-windows*.pivotal"]}
       passed: [upload-PAS-Windows]
 
@@ -631,7 +632,7 @@ jobs:
     - get: peters-pipelines
     - get: pcf-ops-manager
       params: {globs: []}
-      passed: [Configure-RMQ-Tile,Configure-SRT-PAS-Tile,Configure-MySQL-Tile,stage-SCS]
+      passed: [Configure-RMQ-Tile,Configure-SRT-PAS-Tile,Configure-MySQL-Tile,stage-SCS,Configure-PAS-Windows-Tile]
       trigger: true
 
   - task: apply-changes
