@@ -9,7 +9,7 @@ chmod +x winfs-injector-linux
 mv winfs-injector-linux /usr/local/bin/winfs-injector
 
 
-tile=$(ls raw-pasw-tile/pas-windows*.pivotal)
+tile=$(find raw-pasw-tile/ -iname pas-windows*.pivotal -type f -exec basename {} \;)
 
-winfs-injector --input-tile ${tile} \
+winfs-injector --input-tile raw-pasw-tile/${tile} \
 --output-tile pivnet-product/injected-${tile}
