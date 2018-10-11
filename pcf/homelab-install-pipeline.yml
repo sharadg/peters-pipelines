@@ -59,6 +59,13 @@ resources:
     product_slug: p-healthwatch
     product_version: {{healthwatch_major_minor_version}}
     sort_by: semver
+- name: p-redis
+  type: pivnet
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: p-redis
+    product_version: {{redis_major_minor_version}}
+    sort_by: semver
 jobs:
 - name: deploy-opsman
   plan:
@@ -313,7 +320,30 @@ jobs:
       PIVNET_API_TOKEN: {{pivnet_token}}
       NO_PROXY: {{company_proxy_domain}}
       OM_IP: {{om_ip}}
+- name: upload-Redis
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pivnet-product
+      resource: p-redis
+      params: {globs: ["p-redis*.pivotal"]}
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [configure-ops-director]
+      trigger: true
 
+  - task: upload-redis-tile
+    file: peters-pipelines/pcf/tasks/upload-product-and-stemcell/task.yml
+    params:
+      IAAS: "vsphere"
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      NO_PROXY: {{company_proxy_domain}}
+      OM_IP: {{om_ip}}
 - name: stage-SRT-PAS
   plan:
   - aggregate:
@@ -424,6 +454,7 @@ jobs:
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
 
+
 - name: stage-Healthwatch
   plan:
   - aggregate:
@@ -445,6 +476,29 @@ jobs:
       OPSMAN_PASSWORD: {{opsman_admin_password}}
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
+- name: stage-Redis
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-Redis]
+      trigger: true
+    - get: pivnet-product
+      resource: p-redis
+      params: {globs: ["p-redis*.pivotal"]}
+      passed: [upload-Redis]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
+
 
 - name: Configure-SRT-PAS-Tile
   plan:
@@ -625,6 +679,23 @@ jobs:
       OPS_MGR_PWD: {{opsman_admin_password}}
       PRODUCT_NAME: "p-healthwatch"
       PRODUCT_CONFIG_YAML: "peters-pipelines/pcf/sample-tile-configs/healthwatch.yml"
+- name: Configure-Redis-Tile
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [stage-Redis]
+      trigger: true
+
+  - task: configure
+    file: peters-pipelines/pcf/tasks/config-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      PRODUCT_NAME: "p-redis"
+      PRODUCT_CONFIG_YAML: "peters-pipelines/pcf/sample-tile-configs/redis.yml"
 
 - name: apply-changes-all-tiles
   plan:
@@ -632,7 +703,7 @@ jobs:
     - get: peters-pipelines
     - get: pcf-ops-manager
       params: {globs: []}
-      passed: [Configure-RMQ-Tile,Configure-SRT-PAS-Tile,Configure-MySQL-Tile,stage-SCS,Configure-PAS-Windows-Tile]
+      passed: [Configure-RMQ-Tile,Configure-SRT-PAS-Tile,Configure-MySQL-Tile,stage-SCS,Configure-PAS-Windows-Tile,Configure-Redis-Tile]
       trigger: true
 
   - task: apply-changes
