@@ -1,0 +1,23 @@
+product-properties:
+  .properties.bosh_ssh_enabled:
+    value: true
+  .properties.kms:
+    value: disable
+  .properties.rdp_enabled:
+    value: true
+  .properties.system_logging:
+    value: disable
+  .properties.windows_admin_password:
+    value: use_default
+network-properties:
+  network:
+    name: pcf-network
+  other_availability_zones:
+  - name: az1
+  singleton_availability_zone:
+    name: az1
+resource-config:
+  windows_diego_cell:
+    instances: 1
+    instance_type:
+      id: automatic

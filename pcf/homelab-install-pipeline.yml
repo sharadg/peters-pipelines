@@ -336,6 +336,27 @@ jobs:
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
 
+- name: stage-PAS-Windows
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [upload-PAS-Windows]
+      trigger: true
+    - get: raw-pasw-tile
+      params: {globs: ["pas-windows*.pivotal"]}
+      passed: [upload-PAS-Windows]
+
+  - task: stage
+    file: peters-pipelines/pcf/tasks/stage-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+
 - name: stage-RMQ
   plan:
   - aggregate:
@@ -535,6 +556,23 @@ jobs:
       HAPROXY_FLOATING_IPS: ""
       OPSMAN_CLIENT_ID: ""
       OPSMAN_CLIENT_SECRET: ""
+- name: Configure-PAS-Windows-Tile
+  plan:
+  - aggregate:
+    - get: peters-pipelines
+    - get: pcf-ops-manager
+      params: {globs: []}
+      passed: [stage-PAS-Windows]
+      trigger: true
+
+  - task: configure
+    file: peters-pipelines/pcf/tasks/config-product/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      PRODUCT_NAME: "pas-windows"
+      PRODUCT_CONFIG_YAML: "peters-pipelines/pcf/sample-tile-configs/pasw.yml"
 - name: Configure-MySQL-Tile
   plan:
   - aggregate:
