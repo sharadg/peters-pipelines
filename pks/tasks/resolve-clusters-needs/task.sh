@@ -21,4 +21,4 @@ rm in-progress.json current.json pksRun.sh
 git config user.email "pks-bot@pivotal.io"
 git config user.name "pks-bot"
 git add .
-git commit -m "At Desired State"
+git commit -m "At Desired State [ci skip]"
