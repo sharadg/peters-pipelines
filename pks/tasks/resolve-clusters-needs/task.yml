@@ -1,0 +1,18 @@
+---
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: oskoss/pks
+
+inputs:
+  - name: peters-pipelines
+  - name: pks-config
+  - name: pks-clusters
+outputs:
+  - name: pks-clusters-updated
+
+run:
+  path: peters-pipelines/pks/tasks/resolve-clusters-needs/task.sh

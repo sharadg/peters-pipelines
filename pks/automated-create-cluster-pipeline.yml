@@ -11,7 +11,7 @@ resources:
     private_key: {{github_private_key}}
     branch: master
 jobs:
-- name: resolve-clusters-status
+- name: determine-clusters-needs
   plan:
   - get: peters-pipelines
   - get: pks-clusters
@@ -25,6 +25,22 @@ jobs:
   - task: determine-clusters-needs
     file: peters-pipelines/pks/tasks/determine-clusters-needs/task.yml
     params:
-      PKS_CLUSTER_JSON_FILE: {{pks_cluster_json_file}}
+      PKS_CLUSTER_JSON_FILE: desired.json
+  - put: pks-clusters
+    params: {repository: pks-clusters-updated}
+- name: resolve-clusters-needs
+  plan:
+  - get: peters-pipelines
+  - get: pks-clusters
+    trigger: true
+    passed: [determine-clusters-needs]
+  - task: authenticate-pks
+    file: peters-pipelines/pks/tasks/authenticate-pks/task.yml
+    params:
+      PKS_API_URL: {{pks_api_url}}
+      PKS_API_USERNAME: {{pks_api_username}}
+      PKS_API_PASSWORD: {{pks_api_password}}
+  - task: resolve-clusters-needs
+    file: peters-pipelines/pks/tasks/resolve-clusters-needs/task.yml
   - put: pks-clusters
     params: {repository: pks-clusters-updated}
