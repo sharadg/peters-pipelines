@@ -13,15 +13,10 @@ cat current.json
 printf "\n\nDESIRED STATE: \n"
 cat ${PKS_CLUSTER_JSON_FILE}
 
-set -x
-set +u
-
-sed '!d' pksRun.sh
-
-set -u
 time=$(date)
 printf "printf \"PKS cluster needs determined at: $time \"\n" > pksRun.sh
 
+set -x
 pks-diff -current current.json -desired ${PKS_CLUSTER_JSON_FILE}
 chmod +x pksRun.sh
 
