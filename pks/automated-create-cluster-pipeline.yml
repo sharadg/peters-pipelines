@@ -27,4 +27,4 @@ jobs:
     params:
       PKS_CLUSTER_JSON_FILE: {{pks_cluster_json_file}}
   - put: pks-clusters
-    params: {repository: pks-clusters}
+    params: {repository: pks-clusters-updated}

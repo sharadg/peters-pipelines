@@ -11,6 +11,8 @@ inputs:
   - name: peters-pipelines
   - name: pks-config
   - name: pks-clusters
+outputs:
+  - name: pks-clusters-updated
 params:
   PKS_CLUSTER_JSON_FILE:
 

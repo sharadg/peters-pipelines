@@ -3,7 +3,8 @@
 set -u
 
 cp pks-config/creds.yml ~/.pks/creds.yml
-cd pks-clusters
+git clone pks-clusters pks-clusters-updated
+cd pks-clusters-updated
 
 pks clusters --json > current.json
 
