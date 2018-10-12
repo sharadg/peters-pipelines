@@ -15,6 +15,7 @@ jobs:
   plan:
   - get: peters-pipelines
   - get: pks-clusters
+    trigger: true
   - task: authenticate-pks
     file: peters-pipelines/pks/tasks/authenticate-pks/task.yml
     params:
