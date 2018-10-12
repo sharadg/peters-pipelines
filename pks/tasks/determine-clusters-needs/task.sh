@@ -2,10 +2,17 @@
 
 set -xu
 
-cp pks-config/creds.yml ~/.pks/creds.yml 
-cat pks-clusters/${PKS_CLUSTER_JSON_FILE}
+cp pks-config/creds.yml ~/.pks/creds.yml
+cd pks-clusters
 
-pks clusters --json > pks-clusters/current.json
-pks-diff -current pks-clusters/current.json -desired pks-clusters/${PKS_CLUSTER_JSON_FILE}
+pks clusters --json > current.json
 
-cat pks-clusters/pksRun.sh
+echo "CURRENT STATE: "
+cat current.json
+echo "DESIRED STATE: "
+cat ${PKS_CLUSTER_JSON_FILE}
+
+pks-diff -current current.json -desired ${PKS_CLUSTER_JSON_FILE}
+
+echo "STEPS TO GET TO DESIRED STATE: "
+cat pksRun.sh
