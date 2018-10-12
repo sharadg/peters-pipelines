@@ -16,7 +16,7 @@ cat ${PKS_CLUSTER_JSON_FILE}
 set -x
 set +u
 
-rm -f pksRun.sh
+sed '!d' pksRun.sh
 
 set -u
 time=$(date)
@@ -32,4 +32,4 @@ cat pksRun.sh
 git config user.email "pks-bot@pivotal.io"
 git config user.name "pks-bot"
 git add .
-git commit -m "[skip] [skip ci] [ci skip] Add Run Script For Getting Back To Desired State"
+git commit -m "Add Run Script For Getting Back To Desired State"
