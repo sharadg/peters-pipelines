@@ -27,4 +27,4 @@ cat pksRun.sh
 git config user.email "pks-bot@pivotal.io"
 git config user.name "pks-bot"
 git add .
-git commit -m "Add Run Script For Getting Back To Desired State"
+git commit -m "[ci skip] Add Run Script For Getting Back To Desired State"
