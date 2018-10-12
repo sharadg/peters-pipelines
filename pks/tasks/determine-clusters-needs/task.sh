@@ -20,7 +20,7 @@ rm -f pksRun.sh
 
 set -u
 time=$(date)
-echo "timestamp: $time" > pksRun.sh
+echo "echo \"PKS cluster needs determined at: $time \"" > pksRun.sh
 
 pks-diff -current current.json -desired ${PKS_CLUSTER_JSON_FILE}
 
