@@ -4,7 +4,13 @@ resources:
   source:
     uri: git@github.com:Oskoss/peters-pipelines.git
     private_key: {{github_private_key}}
-- name: pks-clusters
+- name: pks-clusters-in
+  type: git
+  source:
+    uri: git@github.com:Oskoss/peters-pks-clusters.git
+    private_key: {{github_private_key}}
+    branch: master
+- name: pks-clusters-out
   type: git
   source:
     uri: git@github.com:Oskoss/peters-pks-clusters.git
@@ -14,7 +20,7 @@ jobs:
 - name: determine-clusters-needs
   plan:
   - get: peters-pipelines
-  - get: pks-clusters
+  - get: pks-clusters-in
     trigger: true
   - task: authenticate-pks
     file: peters-pipelines/pks/tasks/authenticate-pks/task.yml
@@ -26,12 +32,12 @@ jobs:
     file: peters-pipelines/pks/tasks/determine-clusters-needs/task.yml
     params:
       PKS_CLUSTER_JSON_FILE: desired.json
-  - put: pks-clusters
+  - put: pks-clusters-out
     params: {repository: pks-clusters-updated}
 - name: resolve-clusters-needs
   plan:
   - get: peters-pipelines
-  - get: pks-clusters
+  - get: pks-clusters-in
     trigger: true
     passed: [determine-clusters-needs]
   - task: authenticate-pks
@@ -42,5 +48,5 @@ jobs:
       PKS_API_PASSWORD: {{pks_api_password}}
   - task: resolve-clusters-needs
     file: peters-pipelines/pks/tasks/resolve-clusters-needs/task.yml
-  - put: pks-clusters
+  - put: pks-clusters-out
     params: {repository: pks-clusters-updated}

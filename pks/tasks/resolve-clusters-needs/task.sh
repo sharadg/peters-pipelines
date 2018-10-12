@@ -7,7 +7,6 @@ git clone pks-clusters pks-clusters-updated
 cd pks-clusters-updated
 
 printf "\n\nPKS RUN BOOK: \n"
-cat pksRun.sh
 
 ./pksRun.sh
 
