@@ -18,3 +18,6 @@ pks-diff -current current.json -desired ${PKS_CLUSTER_JSON_FILE}
 set +x
 printf "\n\nSTEPS TO GET TO DESIRED STATE: \n"
 cat pksRun.sh
+
+git add .
+git commit -m "Add Run Script For Getting Back To Desired State"
