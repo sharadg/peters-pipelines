@@ -14,7 +14,7 @@ printf "\n\nDESIRED STATE: \n"
 cat ${PKS_CLUSTER_JSON_FILE}
 
 time=$(date)
-printf "printf \"PKS cluster needs determined at: $time \"\n" > pksRun.sh
+printf "printf \"PKS cluster needs determined at: $time \"\nset -x \n" > pksRun.sh
 
 set -x
 pks-diff -current current.json -desired ${PKS_CLUSTER_JSON_FILE}
