@@ -11,8 +11,8 @@ params:
   PKS_CLUSTER_NAME:
 
 inputs:
-  - name: peters-pipelines
+  - name: pks-scripts
   - name: pks-config
 
 run:
-  path: peters-pipelines/pks/tasks/get-cluster/task.sh
+  path: pks-scripts/pks/tasks/get-cluster/task.sh

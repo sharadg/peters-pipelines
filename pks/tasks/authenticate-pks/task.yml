@@ -13,10 +13,10 @@ params:
   PKS_API_PASSWORD:
 
 inputs:
-  - name: peters-pipelines
+  - name: pks-scripts
 
 outputs:
   - name: pks-config
   
 run:
-  path: peters-pipelines/pks/tasks/authenticate-pks/task.sh
+  path: pks-scripts/pks/tasks/authenticate-pks/task.sh

@@ -13,8 +13,8 @@ params:
   PKS_CLUSTER_HOSTNAME:
 
 inputs:
-  - name: peters-pipelines
+  - name: pks-scripts
   - name: pks-config
 
 run:
-  path: peters-pipelines/pks/tasks/create-cluster/task.sh
+  path: pks-scripts/pks/tasks/create-cluster/task.sh

@@ -8,11 +8,11 @@ image_resource:
     repository: oskoss/pks
 
 inputs:
-  - name: peters-pipelines
+  - name: pks-scripts
   - name: pks-config
   - name: pks-clusters
 outputs:
   - name: pks-clusters-updated
 
 run:
-  path: peters-pipelines/pks/tasks/resolve-clusters-needs/task.sh
+  path: pks-scripts/pks/tasks/resolve-clusters-needs/task.sh

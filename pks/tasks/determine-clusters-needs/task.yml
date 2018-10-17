@@ -8,7 +8,7 @@ image_resource:
     repository: oskoss/pks
 
 inputs:
-  - name: peters-pipelines
+  - name: pks-scripts
   - name: pks-config
   - name: pks-clusters
 outputs:
@@ -17,4 +17,4 @@ params:
   PKS_CLUSTER_JSON_FILE:
 
 run:
-  path: peters-pipelines/pks/tasks/determine-clusters-needs/task.sh
+  path: pks-scripts/pks/tasks/determine-clusters-needs/task.sh
