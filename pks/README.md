@@ -2,7 +2,7 @@
 
 Pipelines to manage PKS.  
 
-Initial release is a pipeline to create PKS clusters.
+1) A pipeline to create PKS clusters.
 
 ## Create Cluster
 
