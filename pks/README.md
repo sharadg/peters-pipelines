@@ -6,7 +6,7 @@ Pipelines to manage PKS.
 
 ## Create Cluster
 
-Uses this image: [oskoss/pks](https://hub.docker.com/r/oskoss/pks/)
+Uses this image: [harbor.homeoffice.wal-mart.com/library/oskoss/pks](https://hub.docker.com/r/harbor.homeoffice.wal-mart.com/library/oskoss/pks/)
 
 Uses these parameters:
 
