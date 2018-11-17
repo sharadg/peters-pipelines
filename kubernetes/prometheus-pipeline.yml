@@ -3,6 +3,7 @@ resources:
   type: git
   source:
     uri: https://github.com/sharadg/peters-pipelines.git
+    branch: homelab
 - name: pks-prometheus
   type: git
   source:
