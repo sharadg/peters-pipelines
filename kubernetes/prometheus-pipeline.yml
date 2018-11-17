@@ -2,13 +2,11 @@ resources:
 - name: peters-pipelines
   type: git
   source:
-    uri: git@github.com:Oskoss/peters-pipelines.git
-    private_key: {{github_private_key}}
+    uri: https://github.com/sharadg/peters-pipelines.git
 - name: pks-prometheus
   type: git
   source:
-    uri: git@github.com:Oskoss/pks-prometheus.git
-    private_key: {{github_private_key}}
+    uri: https://github.com/Oskoss/pks-prometheus.git
 
 jobs:
 - name: setup-prometheus
@@ -21,7 +19,8 @@ jobs:
       PKS_API_URL: {{pks_api_url}}
       PKS_API_USERNAME: {{pks_api_username}}
       PKS_API_PASSWORD: {{pks_api_password}}
-      PKS_CLUSTER_NAME: {{pks_cluster_name}}    
+      PKS_CLUSTER_NAME: {{pks_cluster_name}}
+      PKS_CONVERT_HOST_TO_IP: {{pks_convert_host_to_ip}}
   - task: create-namespace
     file: peters-pipelines/kubernetes/tasks/create-namespace/task.yml
     params:
@@ -38,8 +37,8 @@ jobs:
     file: peters-pipelines/kubernetes/tasks/create-prometheus-deployment/task.yml
     params:
       K8S_NAMESPACE: {{k8s_namespace}}
-  - task: create-loadbalancer
-    file: peters-pipelines/kubernetes/tasks/create-prometheus-loadbalancer/task.yml
-    params:
-      K8S_NAMESPACE: {{k8s_namespace}}
+#  - task: create-loadbalancer
+#    file: peters-pipelines/kubernetes/tasks/create-prometheus-loadbalancer/task.yml
+#    params:
+#      K8S_NAMESPACE: {{k8s_namespace}}
   
