@@ -13,6 +13,7 @@ params:
   PKS_API_USERNAME:
   PKS_API_PASSWORD:
   PKS_CLUSTER_NAME:
+  PKS_CONVERT_HOST_TO_IP:
 
 inputs:
   - name: peters-pipelines
